@@ -1,0 +1,71 @@
+<div class="p-5 h-screen bg-gray-100 m-2 content">
+    <h1 class="text-xl mb-2">
+        <div class="container pb-2 mb-4 border-b-2 border-gray-400 w-full">
+            <div class="uppercase text-gray-900 text-3xl title-font font-medium mb-1">
+                <span class="uppercase text-gray-900 text-3xl title-font font-medium mb-1">{{pageTitle}}</span>
+            </div>
+        </div>
+    </h1>
+    <div class="overflow-auto rounded-lg shadow hidden md:block">
+        <table class="w-full listingappears1234" *ngIf='coffeeList && coffeeList.length'>
+            <thead class=" bg-gray-50 border-b-2 border-gray-200">
+                <tr>
+                    <th class="w-10 p-3 text-sm font-semibold tracking-wide text-left testlisting">Id</th>
+                    <th class="w-14 p-3 text-sm font-semibold tracking-wide text-left">Uid</th>
+                    <th class="w-14 p-3 text-sm font-semibold tracking-wide text-left">Blend Name</th>
+                    <th class="w-14 p-3 text-sm font-semibold tracking-wide text-left">Origin</th>
+                    <th class="w-14 p-3 text-sm font-semibold tracking-wide text-left">Variety</th>
+                    <th class="w-10 p-3 text-sm font-semibold tracking-wide text-left">Notes</th>
+                    <th class="w-10 p-3 text-sm font-semibold tracking-wide text-left">Intensifier</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                <tr class="bg-white" *ngFor='let coffee of coffeeList | paginate: { itemsPerPage: 10, currentPage: p }'>
+                    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
+                        <a routerLink="/productlist/{{ coffee.id }}" class="font-bold text-blue-500 hover:underline">{{ coffee.id }}</a>
+                    </td>
+                    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{ coffee.uid }} </td>
+                    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{ coffee.blend_name }}</td>
+                    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{ coffee.origin }}</td>
+                    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{ coffee.variety }}</td>
+                    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">{{ coffee.notes }} </td>
+                    <td class="p-3 text-sm text-gray-700 whitespace-nowrap">
+                        <span class="p-1.5 text-xs font-medium uppercase tracking-wider text-yellow-800 bg-yellow-200 rounded-lg bg-opacity-50">
+                          {{ coffee.intensifier }}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination-list p-5 text-center  border-t-2 border-gray-200">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+        <div *ngIf='errorMessage' class='bg-red-100 p-5 text-center border border-red-400 text-red-700  errorMessage'>
+            Error: {{ errorMessage }}
+        </div>
+    </div>
+    <!-- Mobile Screen -->
+    <div class="grid grid-cols-1  sm:grid-cols-2 gap-4 md:hidden  bg-gray-100">
+        <div class="bg-white space-y-3 p-4 rounded-lg shadow mg-bottom-2 border-2" *ngFor='let coffee of coffeeList | paginate: { itemsPerPage: 10, currentPage: p }'>
+            <div class="flex items-center space-x-2 text-sm">
+                <div class="p-2"><a routerLink="/productlist/{{ coffee.id }}" class="font-bold text-blue-500 hover:underline">{{ coffee.id }}</a></div>
+                <div class="text-sm text-gray-700 p-2">{{ coffee.blend_name }}</div>
+                <div class="">
+                    <span class="p-1.5 text-xs font-medium uppercase tracking-wider text-yellow-800 bg-yellow-200 rounded-lg bg-opacity-50"> {{ coffee.intensifier }} </span>
+                </div>
+            </div>
+            <div>
+                <div class="text-sm text-gray-700 p-2">
+                    <span class="text-sm font-bold text-gray-800 w-3">Origin: </span>{{ coffee.origin }}</div>
+                <div class=" text-sm text-gray-700 p-2 "><span class="text-sm font-bold  text-gray-800">Variety: </span>{{ coffee.variety }}</div>
+                <div class="text-sm text-gray-700 p-2 "><span class="text-sm font-bold  text-gray-800">Notes: </span>{{ coffee.notes }}</div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination-list m-4 grid grid-cols-1  sm:grid-cols-1  md:hidden sm:m-4 sm:text-center">
+        <pagination-controls (pageChange)=" p=$event "></pagination-controls>
+    </div>
+    <div class="m-10">&nbsp;</div>
+</div>
